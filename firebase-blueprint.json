@@ -1,0 +1,134 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Resume": {
+      "title": "Resume",
+      "description": "Resume data including sections and styling",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "templateId": { "type": "string" },
+        "personalInfo": {
+          "type": "object",
+          "properties": {
+            "fullName": { "type": "string" },
+            "email": { "type": "string" },
+            "phone": { "type": "string" },
+            "location": { "type": "string" },
+            "website": { "type": "string" },
+            "linkedin": { "type": "string" },
+            "github": { "type": "string" }
+          }
+        },
+        "sections": {
+          "type": "object",
+          "properties": {
+            "summary": { "type": "string" },
+            "experience": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "string" },
+                  "company": { "type": "string" },
+                  "position": { "type": "string" },
+                  "location": { "type": "string" },
+                  "startDate": { "type": "string" },
+                  "endDate": { "type": "string" },
+                  "current": { "type": "boolean" },
+                  "description": { "type": "string" }
+                }
+              }
+            },
+            "education": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "string" },
+                  "school": { "type": "string" },
+                  "degree": { "type": "string" },
+                  "field": { "type": "string" },
+                  "location": { "type": "string" },
+                  "startDate": { "type": "string" },
+                  "endDate": { "type": "string" },
+                  "gpa": { "type": "string" }
+                }
+              }
+            },
+            "skills": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "projects": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "string" },
+                  "name": { "type": "string" },
+                  "description": { "type": "string" },
+                  "link": { "type": "string" },
+                  "technologies": { "type": "array", "items": { "type": "string" } }
+                }
+              }
+            }
+          }
+        },
+        "metadata": {
+          "type": "object",
+          "properties": {
+            "lastAtsScore": { "type": "number" },
+            "isPublic": { "type": "boolean" }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "title", "createdAt", "updatedAt"]
+    },
+    "AtsHistory": {
+      "title": "ATS History",
+      "description": "Record of ATS scores and analysis for a resume",
+      "type": "object",
+      "properties": {
+        "resumeId": { "type": "string" },
+        "userId": { "type": "string" },
+        "jobDescription": { "type": "string" },
+        "score": { "type": "number" },
+        "feedback": { "type": "string" },
+        "keywords": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["resumeId", "userId", "score", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "resumes/{resumeId}": {
+      "schema": "Resume",
+      "description": "Resume documents"
+    },
+    "ats_history/{historyId}": {
+      "schema": "AtsHistory",
+      "description": "History of ATS analysis"
+    }
+  }
+}
